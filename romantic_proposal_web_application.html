@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার হৃদয়ের প্রদীপ দিয়ে লেখা গল্প... ❤️</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #111827 0%, #31101e 40%, #4c0519 80%, #18040a 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating background items */
+        #floating-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            bottom: -80px;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp linear forwards;
+            filter: drop-shadow(0 0 6px rgba(244, 63, 94, 0.4));
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.7);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.95;
+            }
+            85% {
+                opacity: 0.95;
+            }
+            100% {
+                transform: translateY(-115vh) rotate(360deg) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        /* Main Proposal Glassmorphism Card Container */
+        .card-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 620px;
+            width: 90%;
+            perspective: 1000px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 45px 40px;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 
+                        0 0 40px rgba(244, 63, 94, 0.25),
+                        inset 0 0 15px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: cardEntrance 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards, 
+                       cardGlowPulse 4s infinite 1.5s alternate ease-in-out;
+        }
+
+        .floating-card-anim {
+            animation: floatBreathing 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes cardEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(80px) rotateX(-15deg);
+                filter: blur(12px);
+            }
+            70% {
+                transform: scale(1.02) translateY(-10px) rotateX(2deg);
+                filter: blur(0px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0) rotateX(0deg);
+            }
+        }
+
+        @keyframes cardGlowPulse {
+            0% {
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(244, 63, 94, 0.2);
+            }
+            100% {
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(244, 63, 94, 0.5);
+            }
+        }
+
+        @keyframes floatBreathing {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Heart Icon with Pulse */
+        .main-heart {
+            font-size: 60px;
+            color: #f43f5e;
+            display: inline-block;
+            animation: heartPulse 1.6s infinite alternate;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 15px rgba(244, 63, 94, 0.8));
+        }
+
+        @keyframes heartPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.25); }
+        }
+
+        /* Staggered Storytelling Text Elements */
+        .animate-title {
+            color: #fecdd3;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(225, 29, 72, 0.5);
+            opacity: 0;
+            animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.4s;
+            line-height: 1.4;
+        }
+
+        .animate-desc {
+            color: #f3f4f6;
+            font-size: 17.5px;
+            font-weight: 400;
+            margin-bottom: 32px;
+            line-height: 1.85;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+            text-align: justify;
+            text-align-last: center;
+            opacity: 0;
+            animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.8s;
+        }
+
+        .highlight-text {
+            color: #fb7185;
+            font-weight: 600;
+            display: block;
+            margin-top: 14px;
+            font-size: 19px;
+            text-shadow: 0 0 8px rgba(251, 113, 133, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+                filter: blur(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        /* Buttons Section */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            position: relative;
+            min-height: 60px;
+            opacity: 0;
+            animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 1.2s;
+        }
+
+        .btn {
+            padding: 14px 36px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+            letter-spacing: 0.3px;
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(244, 63, 94, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 12px 35px rgba(244, 63, 94, 0.7);
+            background: linear-gradient(135deg, #fb7185 0%, #f43f5e 100%);
+        }
+
+        #noBtn {
+            background: rgba(255, 255, 255, 0.18);
+            color: #e5e7eb;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            z-index: 100;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Card Flip/Pop Exit and Entrance */
+        .flip-out {
+            animation: flipOut 0.7s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+        }
+
+        .pop-in {
+            animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes flipOut {
+            0% { opacity: 1; transform: scale(1) rotateY(0deg); }
+            100% { opacity: 0; transform: scale(0.6) rotateY(90deg); filter: blur(8px); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.5) rotateY(-90deg); filter: blur(8px); }
+            100% { opacity: 1; transform: scale(1) rotateY(0deg); filter: blur(0px); }
+        }
+
+        /* Success Message Custom Styling */
+        #successCard {
+            border: 1px solid rgba(251, 113, 133, 0.4);
+            background: rgba(45, 10, 24, 0.85);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 520px) {
+            .container {
+                padding: 32px 24px;
+            }
+            .animate-title {
+                font-size: 23px;
+            }
+            .animate-desc {
+                font-size: 15.5px;
+                line-height: 1.75;
+            }
+            .btn {
+                padding: 12px 26px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="floating-container"></div>
+
+    <div class="card-wrapper">
+        <div class="container floating-card-anim" id="mainCard">
+            <div class="main-heart"><i class="fa-solid fa-heart"></i></div>
+            <h1 class="animate-title">আমার অনুভূতির গভীরের কিছু কথা... ✨❤️</h1>
+            
+            <p class="animate-desc">
+                জীবনের এই বিশাল পথচলায় হাজারো মানুষের ভিড়ে আমার দুটি চোখ শুধুই তোমাকেই খুঁজে বের করে। তোমার ওই নিষ্পাপ মিষ্টি হাসিটা আমার প্রতিটি অন্ধকার রাতকে ভোরের আলোয় ভরিয়ে দিতে পারে। 
+                তোমাকে পাওয়ার পর থেকে বুঝেছি, ভালোবাসা কতটা পবিত্র আর অনুভূতি কতটা গভীর হতে পারে। 
+                <br><br>
+                তোমার হাত দুটি ধরে বাকিটা জীবন স্বপ্নের পথ হাঁটতে চাই। সুখের দিনে যেমন তোমার পাশে থেকে আনন্দ ভাগ করে নিতে চাই, তেমনি জীবনের কঠিন ঝড়ো হাওয়ায় তোমাকেই আগলে রাখতে চাই। তোমার হাসি দিয়ে আমার প্রতিটি দিনের সূর্য উদয় হোক আর তোমার স্নেহে কাটুক আমার প্রতিটা গোধূলি।
+                <span class="highlight-text">
+                    তুমি কি আমার জীবনের অগোছালো গল্পে চিরকালের রাজকন্যা আর জীবনসঙ্গী হবে? 💕🌸
+                </span>
+            </p>
+
+            <div class="buttons">
+                <button class="btn" id="yesBtn" onclick="sayYes()">হ্যাঁ, সারাজীবনের জন্য! 😍</button>
+                <button class="btn" id="noBtn" onmouseover="moveNo()" onclick="moveNo()" ontouchstart="moveNo()">উহু, বলবো না 🙈</button>
+            </div>
+        </div>
+
+        <div class="container hidden" id="successCard">
+            <div class="main-heart" style="color: #fb7185;"><i class="fa-solid fa-heart-circle-check"></i></div>
+            <h1 class="animate-title" style="color: #f43f5e; animation-delay: 0.1s;">তুমি হ্যাঁ বলেছো! 😭💖✨</h1>
+            
+            <p class="animate-desc" style="animation-delay: 0.3s; text-align: center;">
+                আমার জীবনের সবচেয়ে আনন্দময় এবং পরম সৌভাগ্যের মুহূর্ত এটি! তোমার একটি হ্যাঁ আজ আমার পুরো পৃথিবীটা বদলে দিলো। 
+                <br><br>
+                আমি কথা দিচ্ছি—জীবনের প্রতিটি মোড়ে, প্রতিটি পদক্ষেপে তোমাকে রাজকন্যার মতো ভালোবাসবো, সম্মান করবো আর তোমার মুখের এই অমূল্য হাসিটা সারাজীবন আগলে রাখবো। কোনোদিন কোনো আঁধার তোমাকে স্পর্শ করতে দেবো না।
+                <span class="highlight-text" style="color: #f43f5e; font-size: 20px; margin-top: 18px;">
+                    অনেক অনেক ভালোবাসা তোমায়, আমার হৃদয়ের রানী! ✨🌹💍
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Array of Flowers, Hearts, and Sparkle Emojis
+        const romanticItems = ['🌸', '🌹', '🌺', '🌻', '🌷', '❤️', '💖', '💕', '💗', '✨', '🥀', '💍'];
+
+        // Function to dynamically instantiate bottom-to-top floating particles
+        function createFloatingItem() {
+            const container = document.getElementById('floating-container');
+            if (!container) return;
+
+            const item = document.createElement('div');
+            item.classList.add('floating-element');
+            
+            // Randomly pick an emoji
+            const randomItem = romanticItems[Math.floor(Math.random() * romanticItems.length)];
+            item.innerText = randomItem;
+
+            // Random horizontal location across full viewport
+            item.style.left = Math.random() * 96 + 'vw';
+            
+            // Random floating duration (6s to 11s for smooth floating)
+            const duration = Math.random() * 5 + 6;
+            item.style.animationDuration = duration + 's';
+
+            // Random font size variation
+            const fontSize = Math.random() * 22 + 20;
+            item.style.fontSize = fontSize + 'px';
+
+            container.appendChild(item);
+
+            // Clean up item once animation completes
+            setTimeout(() => {
+                item.remove();
+            }, duration * 1000);
+        }
+
+        // Periodically spawn floating items
+        setInterval(createFloatingItem, 280);
+
+        // Runaway "No" button logic kept strictly within screen bounds
+        function moveNo() {
+            const noBtn = document.getElementById('noBtn');
+            if (!noBtn) return;
+
+            const padding = 25; // Margin offset from boundaries
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Compute exact max boundaries available on screen
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+
+            // Generate safe positions
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // On clicking "Yes" button
+        function sayYes() {
+            const mainCard = document.getElementById('mainCard');
+            const successCard = document.getElementById('successCard');
+
+            if (mainCard && successCard) {
+                // Add flip-out animation to main card
+                mainCard.classList.add('flip-out');
+
+                setTimeout(() => {
+                    mainCard.classList.add('hidden');
+                    successCard.classList.remove('hidden');
+                    successCard.classList.add('pop-in');
+
+                    // Fire festive Confetti celebration burst
+                    confetti({
+                        particleCount: 140,
+                        spread: 85,
+                        origin: { y: 0.6 }
+                    });
+
+                    // Follow-up celebratory confetti bursts
+                    setTimeout(() => {
+                        confetti({ particleCount: 70, angle: 60, spread: 65, origin: { x: 0.1, y: 0.5 } });
+                        confetti({ particleCount: 70, angle: 120, spread: 65, origin: { x: 0.9, y: 0.5 } });
+                    }, 350);
+                }, 600);
+            }
+        }
+    </script>
+</body>
+</html>
